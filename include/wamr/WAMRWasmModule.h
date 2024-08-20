@@ -103,6 +103,8 @@ class WAMRWasmModule final
     std::vector<std::string> getArgv();
 
   private:
+    bool filesystemPrepared = false;
+
     char errorBuffer[ERROR_BUFFER_SIZE];
 
     std::vector<uint8_t> wasmBytes;

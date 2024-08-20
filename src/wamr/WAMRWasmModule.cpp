@@ -203,7 +203,10 @@ void WAMRWasmModule::doBindToFunction(faabric::Message& msg, bool cache)
 void WAMRWasmModule::bindInternal(faabric::Message& msg)
 {
     // Prepare the filesystem
-    filesystem.prepareFilesystem();
+    if (!filesystemPrepared){
+        filesystem.prepareFilesystem();
+        filesystemPrepared = true;
+    }
 
     // RAII-handle around WAMR's thread environment
     WAMRThreadEnv threadEnv;

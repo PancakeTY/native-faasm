@@ -91,11 +91,38 @@ static void __faasm_push_state_wrapper(wasm_exec_env_t exec_env, char* key)
     kv->pushFull();
 }
 
+static void __faasm_lock_state_write_wrapper(wasm_exec_env_t exec_env, char* key){
+    SPDLOG_DEBUG("S - faasm_lock_state_write - {}", key);
+
+    std::string user = ExecutorContext::get()->getMsg().user();
+    auto kv = faabric::state::getGlobalState().getKV(user, key, 0);
+    kv->lockWrite();
+}
+
+static void __faasm_lock_state_write_size_wrapper(wasm_exec_env_t exec_env, char* key, int32_t dataLength){
+    SPDLOG_DEBUG("S - faasm_lock_state_write_size - {}", key);
+
+    std::string user = ExecutorContext::get()->getMsg().user();
+    auto kv = faabric::state::getGlobalState().getKV(user, key, dataLength);
+    kv->lockWrite();
+}
+
+static void __faasm_unlock_state_write_wrapper(wasm_exec_env_t exec_env, char* key){
+    SPDLOG_DEBUG("S - faasm_unlock_state_write - {}", key);
+    
+    std::string user = ExecutorContext::get()->getMsg().user();
+    auto kv = faabric::state::getGlobalState().getKV(user, key, 0);
+    kv->unlockWrite();
+}
+
 static NativeSymbol ns[] = {
     REG_NATIVE_FUNC(__faasm_read_state, "($$i)i"),
     REG_NATIVE_FUNC(__faasm_read_state_ptr, "($i)i"),
     REG_NATIVE_FUNC(__faasm_write_state, "($$i)"),
     REG_NATIVE_FUNC(__faasm_push_state, "($)"),
+    REG_NATIVE_FUNC(__faasm_lock_state_write, "($)"),
+    REG_NATIVE_FUNC(__faasm_lock_state_write_size, "($i)"),
+    REG_NATIVE_FUNC(__faasm_unlock_state_write, "($)"),
 };
 
 uint32_t getFaasmStateApi(NativeSymbol** nativeSymbols)
