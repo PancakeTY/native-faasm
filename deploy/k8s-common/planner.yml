@@ -20,7 +20,7 @@ spec:
             - control
   containers:
     - name: planner
-      image: faasm.azurecr.io/planner:0.20.0
+      image: tqiunimelb/native-planner:0.0.1
       ports:
         - containerPort: 8081
       env:

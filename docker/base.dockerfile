@@ -19,7 +19,7 @@ SHELL ["/bin/bash", "-c"]
 RUN rm -rf /usr/local/code/faasm \
     && git clone \
         -b v${FAASM_VERSION} \
-        https://github.com/faasm/faasm \
+        https://github.com/PancakeTY/native-faasm \
         /usr/local/code/faasm \
     && cd /usr/local/code/faasm \
     && git submodule update --init \

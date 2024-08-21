@@ -1,6 +1,5 @@
 ARG FAASM_VERSION
-ARG FAASM_SGX_PARENT_SUFFIX
-FROM faasm.azurecr.io/base${FAASM_SGX_PARENT_SUFFIX}:${FAASM_VERSION}
+FROM tqiunimelb/native-base:${FAASM_VERSION}
 
 # Build the worker binary
 ARG FAASM_SGX_MODE
