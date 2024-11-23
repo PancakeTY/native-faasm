@@ -42,7 +42,7 @@ spec:
               weight: 100
 
       containers:
-        - image: tqiunimelb/native-worker:0.0.4
+        - image: tqiunimelb/native-worker:0.0.5
           name: faasm-worker
           ports:
             - containerPort: 8080
